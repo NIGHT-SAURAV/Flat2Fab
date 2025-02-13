@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>Go Premium - Flat2Fab</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Greycliff', sans-serif;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .top-nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 60px);
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .premium-section {
+            position: absolute;
+            left: 220px; /* Align content right next to the sidebar */
+            top: 100px;
+            text-align: left;
+            color: black;
+            font-size: 2rem;
+            padding: 0 20px;
+        }
+
+        .premium-section .go-premium {
+            font-size: 3rem; /* Increase the size of "Go Premium" */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .premium-price {
+            font-size: 1.5rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center; /* Center the logos */
+            gap: 40px;
+            margin-top: 40px; /* Push logos a bit lower */
+        }
+
+        .payment-methods a {
+            display: block;
+            width: 250px;  /* Increased width for larger size */
+            height: 100px; /* Increased height for larger size */
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .payment-methods img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure the images are not cropped */
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-methods img:hover {
+            transform: scale(1.1); /* Slightly larger scale effect */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* New Container for WHY GO PREMIUM? */
+        .why-go-premium {
+            position: fixed;
+            top: 100px;
+            left: 0;
+            width: 220px;
+            background-color: white;
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1.1rem;
+        }
+
+        .why-go-premium h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .why-go-premium ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .why-go-premium li {
+            margin-bottom: 10px;
+        }
+
+        .why-go-premium li::before {
+            content: "✔️"; /* Check mark bullet */
+            margin-right: 10px;
+            color: #007BFF;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video loop autoplay muted>
+            <source src="landing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <nav class="top-nav">
+        <div class="logo">Flat2Fab</div>
+    </nav>
+
+    <aside class="sidebar">
+        <a href="landing.html">Home</a>
+        <a href="profile.html">Your Profile</a>
+        <a href="about.html">About Us</a>
+        <a href="premium.html">Go Premium 👑</a>
+        <a href="use.html">Use Our Model</a>
+        <a href="#" onclick="confirmSignOut()">Sign Out</a>
+    </aside>
+
+    <!-- WHY GO PREMIUM? Container -->
+    <div class="why-go-premium">
+        <h3>WHY GO PREMIUM?</h3>
+        <ul>
+            <li>Use premium high-end model</li>
+            <li>Unlimited model rendering</li>
+            <li>Fast customer support</li>
+            <li>Get updates faster</li>
+        </ul>
+    </div>
+
+    <div class="premium-section">
+        <h1>Go Premium</h1>
+        <div class="premium-price">@ only NRS. 250 / month</div>
+        <div class="payment-methods">
+            <a href="https://esewa.com.np" target="_blank">
+                <img src="esewa.webp" alt="eSewa">
+            </a>
+            <a href="https://khalti.com" target="_blank">
+                <img src="khalti.webp" alt="Khalti">
+            </a>
+        </div>
+    </div>
+</body>
+<script>
+    function confirmSignOut() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to sign out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#007BFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, sign out',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirect to login page if confirmed
+                window.location.href = 'login.html';
+            }
+            // If not confirmed, nothing happens
+        });
+    }
+</script>
+
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload - Photo Upload Feature</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .upload-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 2px dashed #007BFF;
+            border-radius: 8px;
+            padding: 40px;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-area:hover {
+            border-color: #0056b3;
+        }
+
+        .upload-area p {
+            font-size: 1.2rem;
+            color: #007BFF;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #007BFF;
+        }
+
+        .image-preview .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .upload-feedback {
+            margin-top: 20px;
+            display: none;
+            font-size: 1.1rem;
+            color: #007BFF;
+        }
+
+        .progress-bar-container {
+            margin-top: 10px;
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 25px;
+            height: 10px;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #007BFF;
+            width: 0;
+            border-radius: 25px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="upload-container">
+    <h2>Upload Your Photos</h2>
+    <div class="upload-area" id="uploadArea">
+        <p>Click or Drag & Drop photos here to upload</p>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+    </div>
+    <div class="upload-feedback" id="uploadFeedback">Uploading... Please wait.</div>
+    <div class="progress-bar-container" id="progressBarContainer">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="image-preview" id="imagePreviewContainer"></div>
+</div>
+
+<script>
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+    const uploadFeedback = document.getElementById('uploadFeedback');
+    const progressBarContainer = document.getElementById('progressBarContainer');
+    const progressBar = document.getElementById('progressBar');
+
+    // Event listener for clicking on the upload area (opens file input)
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    // Handle file input change (when files are selected)
+    fileInput.addEventListener('change', handleFiles);
+
+    // Handle drag and drop events
+    uploadArea.addEventListener('dragover', (event) => {
+        event.preventDefault();
+        uploadArea.style.borderColor = '#0056b3'; // Change border color on drag over
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.style.borderColor = '#007BFF'; // Revert border color when drag leaves
+    });
+
+    uploadArea.addEventListener('drop', (event) => {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        handleFiles({ target: { files } });
+    });
+
+    // Function to handle selected or dragged files
+    function handleFiles(event) {
+        const files = event.target.files || event.dataTransfer.files;
+        const fileCount = files.length;
+
+        if (fileCount > 0) {
+            uploadFeedback.style.display = 'block';
+            progressBarContainer.style.display = 'block';
+
+            let loaded = 0;
+            const total = fileCount;
+
+            // Simulate upload progress (for demo)
+            const interval = setInterval(() => {
+                loaded++;
+                const progress = Math.min((loaded / total) * 100, 100);
+                progressBar.style.width = `${progress}%`;
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        uploadFeedback.textContent = 'Upload complete!';
+                        setTimeout(() => {
+                            uploadFeedback.style.display = 'none';
+                            progressBarContainer.style.display = 'none';
+                        }, 1000);
+                    }, 500);
+                }
+            }, 300);
+
+
+
+            // Show selected images as previews
+            Array.from(files).forEach((file) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.alt = file.name;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = '×';
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.onclick = () => removeImagePreview(imgElement);
+
+                    const imgWrapper = document.createElement('div');
+                    imgWrapper.style.position = 'relative';
+                    imgWrapper.classList.add('img-wrapper');
+                    imgWrapper.appendChild(imgElement);
+                    imgWrapper.appendChild(removeBtn);
+                    imagePreviewContainer.appendChild(imgWrapper);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    }
+
+    // Function to remove an image preview
+    function removeImagePreview(imageElement) {
+        imagePreviewContainer.removeChild(imageElement.parentElement);
+    }
+</script>
+
+</body>
+</html>

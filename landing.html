@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>Welcome - Flat2Fab</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Greycliff', sans-serif;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(-100%);
+            animation: slideIn 1.5s forwards;
+        }
+
+        .top-nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 60px);
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateX(-100%);
+            animation: slideInSidebar 1.5s forwards;
+            animation-delay: 1.5s;
+        }
+
+        .sidebar video {
+            width: 80%;
+            height: auto;
+            margin: 0 auto 1rem auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .welcome-section {
+            margin-left: 220px;
+            margin-top: 80px;
+            padding: 20px;
+            color: black;
+            text-align: left;
+            font-size: 2rem;
+            animation: fadeIn 2s forwards;
+            animation-delay: 3s;
+        }
+
+        .container {
+            margin-left: 220px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            width: calc(100% - 240px);
+            min-height: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 2s forwards;
+            animation-delay: 3s;
+            position: relative; /* For positioning inside the container */
+        }
+
+        /* Positioning the upload button at the top-right corner */
+        .image-label {
+    font-size: 1rem;
+    cursor: pointer;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 50px;
+    border: 2px dashed #007BFF;
+    border-radius: 8px;
+    background-color: #007BFF;
+    text-align: center;
+    margin-right: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.image-label:hover {
+    background-color: #0056b3;
+    color: #e6e6e6;
+}
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .image-preview {
+            display: inline-block;
+            margin: 10px;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+        }
+
+        .model-output {
+            margin-top: 20px;
+            color: black;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        #imageCount {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        #createModel {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInSidebar {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video loop autoplay muted>
+            <source src="landing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <nav class="top-nav">
+        <div class="logo">Flat2Fab</div>
+    </nav>
+
+    <aside class="sidebar">
+        <video autoplay loop muted>
+            <source src="logo_sidebar.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <a href="landing.html">Home</a>
+        <a href="profile.html">Your Profile</a>
+        <a href="about.html">About Us</a>
+        <a href="premium.html">Go Premium 👑</a>
+        <a href="use.html">Use Our Model</a>
+        <a href="#" onclick="confirmSignOut()">Sign Out</a>
+    </aside>
+
+    <div class="welcome-section">
+        <h1>Welcome, Saurav<span id="userName"></span></h1>
+    </div>
+
+    <div class="container">
+        <div id="imageCount">0 images selected</div>
+        <div class="input-container" id="imageListContainer">
+            <label for="imageUpload" class="image-label">Add Image</label>
+            <input type="file" id="imageUpload" multiple accept="image/*">
+            <div id="imageList" style="display: flex; flex-wrap: wrap;"></div>
+        </div>
+        <button id="createModel" onclick="renderModel()">Create 3D Model</button>
+        <div id="modelOutput" class="model-output">
+            <p>Your 3D Model will appear here.</p>
+            <!-- Placeholder for 3D model -->
+        </div>
+    </div>
+
+    <script>
+      let totalImagesSelected = 0;
+
+document.getElementById('imageUpload').addEventListener('change', function (event) {
+    const files = event.target.files;
+    const imageListContainer = document.getElementById('imageList');
+
+    // Increment the total image count with new files length
+    totalImagesSelected += files.length;
+    document.getElementById('imageCount').textContent = `${totalImagesSelected} image${totalImagesSelected > 1 ? 's' : ''} selected`;
+
+    // Loop through the selected files and create image previews
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        img.classList.add('image-preview');
+        imageListContainer.appendChild(img);
+
+        // Revoke the object URL after the image is loaded to save memory
+        img.onload = function () {
+            URL.revokeObjectURL(img.src);
+        };
+    }
+});
+
+
+
+        // Change button text to "Rendering Model" when clicked
+        function renderModel() {
+            const createModelButton = document.getElementById('createModel');
+            createModelButton.textContent = 'Rendering Model...';
+            createModelButton.disabled = true; // Disable button while rendering
+
+            // Simulate a delay for model rendering (for demo)
+            setTimeout(() => {
+                document.getElementById('modelOutput').style.display = 'block';
+                createModelButton.textContent = 'Create 3D Model'; // Reset button text
+                createModelButton.disabled = false; // Enable the button
+            }, 3000); // 3 seconds delay for demo
+        }
+
+        function confirmSignOut() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to sign out?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, sign me out!',
+                cancelButtonText: 'No, stay signed in!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Sign out logic here
+                    window.location.href = 'signout.html';
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

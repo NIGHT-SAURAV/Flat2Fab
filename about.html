@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>About Us - Flat2Fab</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Greycliff', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .top-nav .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            margin: 80px 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 200px;
+            height: 320px;
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            margin: 10px 0 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .card a img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 60px);
+            background-color: black;
+            color: white;
+            padding: 1rem;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .premium-section {
+            position: absolute;
+            left: 220px;
+            top: 100px;
+            text-align: left;
+            color: black;
+            font-size: 2rem;
+            padding: 0 20px;
+        }
+
+        .premium-section .go-premium {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video loop autoplay muted>
+            <source src="landing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <nav class="top-nav">
+        <div class="logo">Flat2Fab</div>
+    </nav>
+
+    <aside class="sidebar">
+        <a href="landing.html">Home</a>
+        <a href="profile.html">Your Profile</a>
+        <a href="about.html">About Us</a>
+        <a href="premium.html">Go Premium 👑</a>
+        <a href="use.html">Use Our Model</a>
+        <a href="#" onclick="confirmSignOut()">Sign Out</a>
+    </aside>
+
+    <div class="premium-section">
+        <h1>About Us</h1>
+        <div class="container">
+            <div class="card">
+                <img src="rinal.jpg" alt="Rinal Paudyal">
+                <p>Rinal Paudyal</p>
+                <a href="https://www.instagram.com/rinal.paudyal/" target="_blank">
+                    <img src="instagram_icon.png" alt="Instagram">
+                </a>
+            </div>
+            <div class="card">
+                <img src="shaksham.png" alt="Shaksham Singh">
+                <p>Shaksham Singh</p>
+                <a href="https://www.instagram.com/sakchhamsingh/" target="_blank">
+                    <img src="instagram_icon.png" alt="Instagram">
+                </a>
+            </div>
+            <div class="card">
+                <img src="saurav.jpg" alt="Saurav Sapkota">
+                <p>Saurav Sapkota</p>
+                <a href="https://www.instagram.com/_saurav_sapkota_/" target="_blank">
+                    <img src="instagram_icon.png" alt="Instagram">
+                </a>
+            </div>
+            <div class="card">
+                <img src="shashank.png" alt="Shashank Karki">
+                <p>Shashank Karki</p>
+                <a href="https://www.instagram.com/karki_shashank/" target="_blank">
+                    <img src="instagram_icon.png" alt="Instagram">
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function confirmSignOut() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to sign out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#007BFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, sign out',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'login.html';
+            }
+        });
+    }
+</script>
+
+</html>

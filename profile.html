@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="logo.png" type="image/png">
+    <title>Go Premium - Flat2Fab</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: 'Greycliff', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            color: white;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            text-align: center;
+            font-size: 0.9rem; /* Smaller font size */
+        }
+
+        .container h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .profile-pic-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #ddd;
+            background-image: url('default-avatar.png');
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #007BFF;
+        }
+
+        .container label {
+            display: block;
+            margin: 10px 0 5px;
+            text-align: left;
+            color: #555;
+        }
+
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        .container button {
+            width: 100%;
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .container button:hover {
+            background-color: #0056b3;
+        }
+
+        .container button.delete-account {
+            background-color: #dc3545;
+            margin-top: 15px;
+        }
+
+        .container button.delete-account:hover {
+            background-color: #c82333;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 70px 10px;
+            }
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 200px;
+            height: calc(100% - 60px);
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            z-index: 10;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .premium-section {
+            position: absolute;
+            left: 220px;
+            top: 100px;
+            text-align: left;
+            color: black;
+            font-size: 2rem;
+            padding: 0 20px;
+        }
+
+        .premium-section .go-premium {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .premium-price {
+            font-size: 1.5rem;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .payment-methods a {
+            display: block;
+            width: 250px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .payment-methods img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .payment-methods img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="video-container">
+        <video loop autoplay muted>
+            <source src="landing.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <nav class="top-nav">
+        <div class="logo">Flat2Fab</div>
+    </nav>
+
+    <aside class="sidebar">
+        <a href="landing.html">Home</a>
+        <a href="profile.html">Your Profile</a>
+        <a href="about.html">About Us</a>
+        <a href="premium.html">Go Premium 👑</a>
+        <a href="use.html">Use Our Model</a>
+        <a href="#" onclick="confirmSignOut()">Sign Out</a>
+    </aside>
+
+    <div class="premium-section">
+        <h1>Your Profile</h1>
+        <div class="container">
+            <label for="name">Name:</label>
+            <input type="text" id="name" value="Saurav">
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" value="sauravsapkota21@gmail.com" disabled>
+
+            <label for="country">Country:</label>
+            <input type="text" id="country" value="Nepal" disabled>
+
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" id="currentPassword">
+
+            <label for="newPassword">New Password:</label>
+            <input type="password" id="newPassword">
+
+            <label for="confirmNewPassword">Confirm New Password:</label>
+            <input type="password" id="confirmNewPassword">
+
+            <button onclick="saveChanges()">Save Changes</button>
+            <button class="delete-account" onclick="deleteAccount()">Delete Account</button>
+        </div>
+    </div>
+</body>
+
+<script>
+    function confirmSignOut() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to sign out?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#007BFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, sign out',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'login.html';
+            }
+        });
+    }
+
+    function saveChanges() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Changes saved successfully!',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
+
+    function deleteAccount() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'This action cannot be undone. Do you want to delete your account?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#007BFF',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'No, keep it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Your account has been deleted!',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(() => {
+                    window.location.href = 'index.html';
+                });
+            }
+        });
+    }
+</script>
+
+</html>
